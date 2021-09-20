@@ -140,6 +140,15 @@ const macro = () => {
 
       if ($button) {
         $button.closest("a").click();
+        chrome.extension.sendMessage({ type: "successTicketing" });
+        setTimeout(() => {
+          const iframe = document.querySelector("#korail-modal-traininfo iframe");
+          if (iframe) {
+            iframe.contentDocument.querySelector(".btn_c > a").click();
+            localStorage.removeItem("macro");
+            chrome.extension.sendMessage({ type: "successTicketing" });
+          }
+        }, 1500);
         localStorage.removeItem("macro");
         chrome.extension.sendMessage({ type: "successTicketing" });
         break;
@@ -147,7 +156,7 @@ const macro = () => {
     }
   }
 
-  setTimeout(reload, 1000);
+  setTimeout(reload, 700);
 };
 
 const reload = () => {
